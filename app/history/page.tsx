@@ -3,8 +3,6 @@ import { CatalystCard } from "@/components/catalyst-card";
 import { EmptyState } from "@/components/empty-state";
 import { PageHeader } from "@/components/page-header";
 
-export const revalidate = 900;
-
 export default function HistoryPage() {
   const fired = CATALYSTS.filter((c) => c.status === "fired").sort(
     (a, b) => new Date(b.eventDate).getTime() - new Date(a.eventDate).getTime(),

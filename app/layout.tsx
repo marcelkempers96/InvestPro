@@ -23,6 +23,8 @@ const jetbrains = JetBrains_Mono({
   variable: "--font-jetbrains",
 });
 
+const basePath = process.env.NEXT_PUBLIC_BASE_PATH ?? "";
+
 export const metadata: Metadata = {
   title: {
     default: "Catalyst — Things that move the market",
@@ -30,7 +32,11 @@ export const metadata: Metadata = {
   },
   description:
     "A swing-trade catalyst tracker. Earnings, FDA decisions, regulatory rulings, contract awards — with options flow, sympathy plays, and the bull/bear case for each.",
-  manifest: "/manifest.json",
+  manifest: `${basePath}/manifest.json`,
+  icons: {
+    icon: `${basePath}/icon-192.svg`,
+    apple: `${basePath}/icon-192.svg`,
+  },
   appleWebApp: {
     capable: true,
     title: "Catalyst",

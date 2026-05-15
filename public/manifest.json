@@ -2,15 +2,31 @@
   "name": "Catalyst — swing-trade catalyst tracker",
   "short_name": "Catalyst",
   "description": "Things that move the market — earnings, FDA, regulatory, contracts.",
-  "start_url": "/",
+  "start_url": "/InvestPro/",
+  "scope": "/InvestPro/",
   "display": "standalone",
   "orientation": "portrait",
   "background_color": "#0c0a09",
   "theme_color": "#0c0a09",
   "categories": ["finance", "productivity"],
   "icons": [
-    { "src": "/icon-192.svg", "type": "image/svg+xml", "sizes": "192x192", "purpose": "any" },
-    { "src": "/icon-512.svg", "type": "image/svg+xml", "sizes": "512x512", "purpose": "any" },
-    { "src": "/icon-maskable.svg", "type": "image/svg+xml", "sizes": "512x512", "purpose": "maskable" }
+    {
+      "src": "/InvestPro/icon-192.svg",
+      "type": "image/svg+xml",
+      "sizes": "192x192",
+      "purpose": "any"
+    },
+    {
+      "src": "/InvestPro/icon-512.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512",
+      "purpose": "any"
+    },
+    {
+      "src": "/InvestPro/icon-maskable.svg",
+      "type": "image/svg+xml",
+      "sizes": "512x512",
+      "purpose": "maskable"
+    }
   ]
 }

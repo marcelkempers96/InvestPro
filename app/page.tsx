@@ -8,8 +8,6 @@ import { NewsCard } from "@/components/news-card";
 import { PageHeader } from "@/components/page-header";
 import { SectionHeading } from "@/components/section-heading";
 
-export const revalidate = 900;
-
 export default function TodayPage() {
   const stacks = tickerStackCounts();
 

@@ -6,8 +6,6 @@ import { CatalystCard } from "@/components/catalyst-card";
 import { EmptyState } from "@/components/empty-state";
 import { PageHeader } from "@/components/page-header";
 
-export const revalidate = 900;
-
 export default function MultiPage() {
   const stacks = tickerStackCounts();
   const tickers = Object.entries(stacks)

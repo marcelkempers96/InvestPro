@@ -1,17 +1,19 @@
+// Deployed as a fully static site to GitHub Pages (project page).
+// Served from https://<user>.github.io/InvestPro/ — hence the basePath.
+const basePath = "/InvestPro";
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  output: "export",
+  basePath,
   reactStrictMode: true,
-  async headers() {
-    return [
-      {
-        source: "/(.*)",
-        headers: [
-          { key: "X-Content-Type-Options", value: "nosniff" },
-          { key: "X-Frame-Options", value: "DENY" },
-          { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
-        ],
-      },
-    ];
+  trailingSlash: true,
+  images: {
+    // GitHub Pages has no image optimization server.
+    unoptimized: true,
+  },
+  env: {
+    NEXT_PUBLIC_BASE_PATH: basePath,
   },
 };
 

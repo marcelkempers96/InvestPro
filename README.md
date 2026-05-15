@@ -54,8 +54,50 @@ npm install
 npm run dev
 ```
 
-Open <http://localhost:3000>. There is no auth wall yet — the watchlist persists
-to localStorage.
+Because the app is configured with `basePath: "/InvestPro"` for GitHub Pages,
+the dev server serves at <http://localhost:3000/InvestPro>. There is no auth
+wall yet — the watchlist persists to localStorage.
+
+## Deploy to GitHub Pages
+
+The app is configured as a fully static Next.js export
+(`output: "export"` in `next.config.mjs`) and ships with a GitHub Actions
+workflow at `.github/workflows/deploy.yml`.
+
+1. In the repo, go to **Settings → Pages** and set **Source** to
+   **GitHub Actions**.
+2. Push to `main` (or run the workflow manually via **Actions →
+   Deploy to GitHub Pages → Run workflow**).
+3. The workflow runs `npm ci && npm run build`, which produces the static
+   site in `out/`, then publishes it. The site goes live at
+   <https://marcelkempers96.github.io/InvestPro/>.
+
+`npm run build` already emits the static export — no separate `next export`
+step is needed on Next.js 15.
+
+### Static-export constraints
+
+GitHub Pages is a static file host, so a few things differ from a
+server-rendered Next.js deployment:
+
+- **`basePath: "/InvestPro"`** — every asset and link is prefixed for the
+  project-page URL. If you move to a custom domain or a `*.github.io` repo,
+  change `basePath` in `next.config.mjs` and the paths in
+  `public/manifest.json`.
+- **No API routes / route handlers.** The catalyst list is filtered entirely
+  client-side from the seed data (`components/catalysts-browser.tsx` reads the
+  URL query string in the browser).
+- **No ISR / `revalidate`.** All pages are prerendered at build time;
+  `/catalysts/[id]` uses `generateStaticParams`.
+- **No image optimization** (`images.unoptimized: true`).
+- **No response headers.** CSP and security headers can't be set on GitHub
+  Pages; they'd need a real host (Vercel) or a CDN in front.
+- **`public/.nojekyll`** ships so GitHub doesn't strip the `_next` folder.
+
+When the backend slices land (Supabase, ingestion, Anthropic enrichment,
+Stripe, Resend), the app will need a host that can run server code — Vercel,
+as the original spec intends. GitHub Pages is suitable for the current
+static, read-only prototype.
 
 ## Stack
 
@@ -82,7 +124,6 @@ app/
   history/page.tsx           — fired catalysts + outcomes
   settings/page.tsx          — notification + subscription preferences
   about/page.tsx             — methodology
-  api/catalysts/route.ts     — JSON endpoint (filter-aware)
 components/
   app-shell.tsx, nav-bar.tsx, bottom-tab-bar.tsx
   catalyst-card.tsx, news-card.tsx
@@ -99,7 +140,9 @@ lib/
   data/catalysts.ts          — seed catalyst records
   data/news.ts               — seed news records
 public/
-  manifest.json, icon-*.svg, robots.txt
+  manifest.json, icon-*.svg, robots.txt, .nojekyll
+.github/workflows/
+  deploy.yml                 — build + publish static export to GitHub Pages
 ```
 
 ## Important constraints from the spec
